@@ -1,0 +1,19 @@
+{
+  "name": "movieapps",
+  "version": "1.0.0",
+  "description": "Web creada con la API The movie DB",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosRMx/MovieApps.git"
+  },
+  "author": "@CarlosRMx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarlosRMx/MovieApps/issues"
+  },
+  "homepage": "https://github.com/CarlosRMx/MovieApps#readme"
+}
