@@ -6,13 +6,11 @@ window.addEventListener('hashchange',navigator,false);
 
 
 function navigator(){
+    console.log({location});
 
     if(location.hash.startsWith('#trends')){
-
         trendsPage();
-    
-        getTrendingMoviesPreview();
-        getCategoriesPreview();
+
     }else if(location.hash.startsWith('#search=')){
         searchPage();
 
@@ -39,4 +37,6 @@ function categoriesPage(){
 }
 function homePage(){
     console.log('Home');
+    getTrendingMoviesPreview();
+    getCategoriesPreview();
 }
