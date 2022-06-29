@@ -1,14 +1,23 @@
+//Haciendo uso de la libreria axios
+const api = axios.create({
+    baseURL:'https://api.themoviedb.org/3/',
+    headers:{
+        'Content-Type': 'application/json;charset=utf-8'
+    },
+    params:{
+        'api_key': API_KEY
+    },
+
+});
+
 async function getTrendingMoviesPreview(){
-    const answer= await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key='+API_KEY);
-    const data = await answer.json();
+    const {data:{results}}= await api('trending/movie/day');
+    const movies=results;
 
     // console.log(answer);
     // console.log(data);
 
-    //Variable que contiene el array de las peliculas
-    const {results}=data;
-
-    results.forEach(movie => {
+    movies.forEach(movie => {
         //principal container
         const trendingMoviesContainerPreview=document.querySelector('#trendingPreview .trendingPreview-movieList');
         const {tittle,poster_path}=movie;
@@ -31,15 +40,15 @@ async function getTrendingMoviesPreview(){
 }
 
 async function getCategoriesPreview(){
-    const answer= await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key='+API_KEY);
-    const data = await answer.json();
+    const {data:{genres}}= await api('genre/movie/list');
+    console.log(genres);
+    const categories=genres;
 
     // console.log(answer);
     // console.log(data);
 
-    const {genres}=data;
 
-    genres.forEach(category =>{
+    categories.forEach(category =>{
         //principal container
         const categoriesContainerPrewiew=document.querySelector('#categoriesPreview .categoriesPreview-list');
         const {id,name}=category;
