@@ -73,7 +73,7 @@ async function getCategoriesPreview(){
 }
 
 async function getMoviesByCategory(id){
-    window.scrollTo(0,40);
+
     const { data:{results} } = await api('discover/movie', {
         params: {
           with_genres: id,
@@ -103,7 +103,15 @@ async function getMoviesByCategory(id){
     createMovies(movies,genericSection);
 }
 
-
+async function getMoviesBySearch(query){
+    const {data:{results}}= await api ('search/movie',{
+        params:{
+            query,
+        }
+    });
+    const movies=results;
+    createMovies(movies,genericSection);
+}
 
 //helpers 
 function createMovies(movies,container){
