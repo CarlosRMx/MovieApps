@@ -32,6 +32,9 @@ function navigator(){
     }else{
         homePage();
     }
+    
+    document.body.scrollTop=0;
+    document.documentElement.scrollTop=0;
 }
 
 function trendsPage(){
@@ -104,7 +107,7 @@ function categoriesPage(){
     const [_, categoryData] = location.hash.split('=');
     const [categoryId, categoryName] = categoryData.split('-');
 
-    headerCategoryTitle.innerHTML = categoryName;
+    headerCategoryTitle.innerHTML = decodeURIComponent(categoryName);
     
     getMoviesByCategory(categoryId);
 }
