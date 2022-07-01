@@ -41,7 +41,7 @@ async function getTrendingMoviesPreview(){
 
 async function getCategoriesPreview(){
     const {data:{genres}}= await api('genre/movie/list');
-    console.log(genres);
+    //console.log(genres);
     const categories=genres;
 
     // console.log(answer);
@@ -62,7 +62,41 @@ async function getCategoriesPreview(){
         tittleCategory.setAttribute('id','id'+ id);
         tittleCategory.textContent=name;
 
+        tittleCategory.addEventListener('click',()=>{
+            location.hash = `#category=${category.id}-${category.name}`;
+        })
         categoryContainer.appendChild(tittleCategory);
         categoriesPreviewList.appendChild(categoryContainer);
     });
+}
+
+async function getMoviesByCategory(id){
+    window.scrollTo(0,40);
+    const { data:{results} } = await api('discover/movie', {
+        params: {
+          with_genres: id,
+        },
+    });
+
+    const movies=results;
+    console.log(id);
+    movies.forEach(movie=>{
+        const {tittle,poster_path}=movie;
+
+        //creando los elementos dinamicamente
+        const movieContainer=document.createElement('div');
+        movieContainer.classList.add('movie-container');
+
+        const imgMovieContainer=document.createElement('img');
+        imgMovieContainer.classList.add('movie-img');
+        imgMovieContainer.setAttribute('alt',tittle);
+        imgMovieContainer.setAttribute(
+            'src',
+            'https://image.tmdb.org/t/p/w300' + poster_path,
+        )
+
+        movieContainer.appendChild(imgMovieContainer);
+        genericSection.appendChild(movieContainer);
+    });
+    
 }
