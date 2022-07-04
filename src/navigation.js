@@ -11,7 +11,9 @@ trendingBtn.addEventListener('click',()=>{
     location.hash='#trends';
 });
 arrowBtn.addEventListener('click',()=>{
-    location.hash=window.history.back();
+    //location.hash='#home'
+    //location.hash=window.history.back();
+    history.back();
 })
 
 //Navegacion haciendo uso de hash 
@@ -43,8 +45,10 @@ function navigator(){
 }
 
 function trendsPage(){
+    
     console.log('Trends');
 
+    limpiarSearchByCategory();
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -57,6 +61,9 @@ function trendsPage(){
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
+
+    headerCategoryTitle.innerHTML = 'Tendencias';
+    getTrendingMovies();
 }
 function searchPage(){
     console.log('Serch');
