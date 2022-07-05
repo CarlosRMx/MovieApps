@@ -78,6 +78,36 @@ async function getMoviesBySearch(query){
     createMovies(movies,genericSection);
 }
 
+async function getMovieById(id){
+    const {data} = await api(`movie/${id}`);
+    //console.log(data);
+    const {original_title,overview,vote_average,poster_path,genres}=data;
+    //console.log(overview,original_title,genres);
+
+    const movieImgUrl = 'https://image.tmdb.org/t/p/w500' + poster_path;
+    headerSection.style.background = `
+        linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.35) 19.27%,
+        rgba(0, 0, 0, 0) 29.17%
+        ),
+        url(${movieImgUrl})
+    `;
+
+    movieDetailTitle.textContent = original_title;
+    movieDetailDescription.textContent = overview;
+    movieDetailScore.textContent = vote_average;
+
+    createCategories(genres, movieDetailCategoriesList);
+}
+
+async function getSimilarMovies(id){
+    const {data:{results}} = await api(`movie/${id}/recommendations`);
+    const movies=results;
+    //console.log(data);
+
+    createMovies(movies,relatedMoviesContainer);
+}
 
 
 //helpers 
@@ -86,8 +116,7 @@ function createMovies(movies,container){
     movies.forEach(movie => {
         //principal container
         //const trendingMoviesPreviewList=document.querySelector('#trendingPreview .trendingPreview-movieList');
-        const {tittle,poster_path}=movie;
-
+        const {tittle,poster_path,id}=movie;
         //creando los elementos dinamicamente
         const movieContainer=document.createElement('div');
         movieContainer.classList.add('movie-container');
@@ -99,6 +128,10 @@ function createMovies(movies,container){
             'src',
             'https://image.tmdb.org/t/p/w300' + poster_path,
         )
+
+        movieContainer.addEventListener('click',()=>{
+            location.hash = '#movie=' + id;
+        })
 
         movieContainer.appendChild(imgMovieContainer);
         container.appendChild(movieContainer);
