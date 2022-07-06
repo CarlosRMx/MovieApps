@@ -112,9 +112,13 @@ async function getSimilarMovies(id){
 
 //helpers 
 function createMovies(movies,container){
+
+    limpiarMovieTrendsHTML();
+    limpiarSearchByCategory();
+    limipiarSimilarMoviesList();
+    
     movies.forEach(movie => {
-        //principal container
-        //const trendingMoviesPreviewList=document.querySelector('#trendingPreview .trendingPreview-movieList');
+        
         const {tittle,poster_path,id}=movie;
         //creando los elementos dinamicamente
         const movieContainer=document.createElement('div');
@@ -139,6 +143,10 @@ function createMovies(movies,container){
 }
 
 function createCategories(categories,container){
+
+    limpiarCategoriesMovieDetail();
+    limpiarCateogriasHTML();
+
     categories.forEach(category =>{
         //principal container
         const categoriesPreviewList=document.querySelector('#categoriesPreview .categoriesPreview-list');
@@ -159,4 +167,33 @@ function createCategories(categories,container){
         categoryContainer.appendChild(tittleCategory);
         container.appendChild(categoryContainer);
     });
+}
+
+function limpiarCateogriasHTML(){
+    while(categoriesPreviewList.firstChild){
+        categoriesPreviewList.removeChild(categoriesPreviewList.firstChild);
+    }
+}
+
+function limpiarMovieTrendsHTML(){
+    while(trendingMoviesPreviewList.firstChild){
+        trendingMoviesPreviewList.removeChild(trendingMoviesPreviewList.firstChild);
+    }
+}
+function limpiarSearchByCategory(){
+    while(genericSection.firstChild){
+        genericSection.removeChild(genericSection.firstChild);
+    }
+}
+
+function limpiarCategoriesMovieDetail(){
+    while(movieDetailCategoriesList.firstChild){
+        movieDetailCategoriesList.removeChild(movieDetailCategoriesList.firstChild);
+    }
+}
+
+function limipiarSimilarMoviesList(){
+    while(relatedMoviesContainer.firstChild){
+        relatedMoviesContainer.removeChild(relatedMoviesContainer.firstChild);
+    }
 }

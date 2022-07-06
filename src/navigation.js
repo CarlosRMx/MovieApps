@@ -11,8 +11,6 @@ trendingBtn.addEventListener('click',()=>{
     location.hash='#trends';
 });
 arrowBtn.addEventListener('click',()=>{
-    //location.hash='#home'
-    //location.hash=window.history.back();
     history.back();
 })
 
@@ -34,8 +32,10 @@ function navigator(){
 
     }else if(location.hash.startsWith('#movie=')){
         movieDetailPage();
+
     }else if(location.hash.startsWith('#category=')){
         categoriesPage();
+
     }else{
         homePage();
     }
@@ -48,7 +48,8 @@ function trendsPage(){
 
     console.log('Trends');
 
-    limpiarSearchByCategory();
+    
+
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -68,7 +69,7 @@ function trendsPage(){
 function searchPage(){
     console.log('Serch');
 
-    limpiarSearchByCategory();
+    
 
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
@@ -89,8 +90,7 @@ function searchPage(){
 function movieDetailPage(){
     console.log('Movie');
 
-    limpiarCategoriesMovieDetail();
-    limipiarSimilarMoviesList();
+  
     
     headerSection.classList.add('header-container--long');
     // headerSection.style.background = '';
@@ -109,13 +109,14 @@ function movieDetailPage(){
     //['movie','7845222'];
     const [_,movieId]=location.hash.split('=');
 
+
     getMovieById(movieId);
     getSimilarMovies(movieId);
 }
 function categoriesPage(){
     console.log('Category');
 
-    limpiarSearchByCategory();
+  
     
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
@@ -140,8 +141,6 @@ function categoriesPage(){
 }
 function homePage(){
     console.log('Home');
-    limpiarMovieTrendsHTML();
-    limpiarCateogriasHTML();
 
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
@@ -158,33 +157,4 @@ function homePage(){
 
     getTrendingMoviesPreview();
     getCategoriesPreview();
-}
-
-function limpiarCateogriasHTML(){
-    while(categoriesPreviewList.firstChild){
-        categoriesPreviewList.removeChild(categoriesPreviewList.firstChild);
-    }
-}
-
-function limpiarMovieTrendsHTML(){
-    while(trendingMoviesPreviewList.firstChild){
-        trendingMoviesPreviewList.removeChild(trendingMoviesPreviewList.firstChild);
-    }
-}
-function limpiarSearchByCategory(){
-    while(genericSection.firstChild){
-        genericSection.removeChild(genericSection.firstChild);
-    }
-}
-
-function limpiarCategoriesMovieDetail(){
-    while(movieDetailCategoriesList.firstChild){
-        movieDetailCategoriesList.removeChild(movieDetailCategoriesList.firstChild);
-    }
-}
-
-function limipiarSimilarMoviesList(){
-    while(relatedMoviesContainer.firstChild){
-        relatedMoviesContainer.removeChild(relatedMoviesContainer.firstChild);
-    }
 }
