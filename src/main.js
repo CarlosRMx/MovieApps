@@ -112,7 +112,6 @@ async function getSimilarMovies(id){
 
 //helpers 
 function createMovies(movies,container){
-
     movies.forEach(movie => {
         //principal container
         //const trendingMoviesPreviewList=document.querySelector('#trendingPreview .trendingPreview-movieList');
@@ -140,7 +139,6 @@ function createMovies(movies,container){
 }
 
 function createCategories(categories,container){
-
     categories.forEach(category =>{
         //principal container
         const categoriesPreviewList=document.querySelector('#categoriesPreview .categoriesPreview-list');
