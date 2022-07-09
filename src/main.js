@@ -10,6 +10,8 @@ const api = axios.create({
 
 });
 
+let page=1;
+
 async function getTrendingMoviesPreview(){
     const {data:{results}}= await api('trending/movie/day');
     const movies=results;
@@ -20,7 +22,31 @@ async function getTrendingMovies(){
     const {data:{results}}= await api('trending/movie/day');
     const movies=results;
 
-    createMovies(movies,genericSection);
+    createMovies(movies,genericSection,{lazyLoad:true,clean:true});
+
+    const btnLoadMore=document.createElement('button');
+    btnLoadMore.addEventListener('click',getMoreTrendingMovies);
+    btnLoadMore.textContent='Cargar mas';
+    genericSection.appendChild(btnLoadMore);
+}
+
+async function getMoreTrendingMovies(){
+    page++;
+    const {data:{results}}= await api('trending/movie/day',{
+        params:{
+            'page':page,
+        }
+    });
+    
+    const movies=results;
+
+    createMovies(movies,genericSection,{lazyLoad:true,clean:false});
+
+    const btnLoadMore=document.createElement('button');
+    btnLoadMore.addEventListener('click',getMoreTrendingMovies);
+    btnLoadMore.textContent='Cargar mas';
+    genericSection.appendChild(btnLoadMore);
+
 }
 
 
@@ -121,11 +147,21 @@ const lazyLoader = new IntersectionObserver((entries) => {
     });
 });
 
-function createMovies(movies,container, lazyLoad=false){
+function createMovies(
+    movies,
+    container, 
+    {
+        lazyLoad=false,
+        clean=true
+    }={},
+){
 
     limpiarMovieTrendsHTML();
-    limpiarSearchByCategory();
     limipiarSimilarMoviesList();
+
+    if(clean){
+        limpiarSearchByCategory();
+    }
     
     movies.forEach(movie => {
 
