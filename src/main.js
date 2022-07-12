@@ -10,7 +10,7 @@ const api = axios.create({
 
 });
 
-let page=1;
+
 
 async function getTrendingMoviesPreview(){
     const {data:{results}}= await api('trending/movie/day');
@@ -24,28 +24,45 @@ async function getTrendingMovies(){
 
     createMovies(movies,genericSection,{lazyLoad:true,clean:true});
 
-    const btnLoadMore=document.createElement('button');
-    btnLoadMore.addEventListener('click',getMoreTrendingMovies);
-    btnLoadMore.textContent='Cargar mas';
-    genericSection.appendChild(btnLoadMore);
+    // const btnLoadMore=document.createElement('button');
+    // btnLoadMore.addEventListener('click',getMoreTrendingMovies);
+    // btnLoadMore.textContent='Cargar mas';
+    // genericSection.appendChild(btnLoadMore);
 }
 
 async function getMoreTrendingMovies(){
-    page++;
-    const {data:{results}}= await api('trending/movie/day',{
-        params:{
-            'page':page,
-        }
-    });
+
+    const {scrollTop,scrollHeight,clientHeight}=document.documentElement;
+
+    const scrollIsBottom = (scrollTop+clientHeight) >= (scrollHeight-15)
+
+    if(scrollIsBottom){
+        page++;
+        const {data:{results}}= await api('trending/movie/day',{
+            params:{
+                'page':page,
+            }
+        });
+        
+        const movies=results;
     
-    const movies=results;
+        createMovies(movies,genericSection,{lazyLoad:true,clean:false});
+    }
+    // page++;
+    // const {data:{results}}= await api('trending/movie/day',{
+    //     params:{
+    //         'page':page,
+    //     }
+    // });
+    
+    // const movies=results;
 
-    createMovies(movies,genericSection,{lazyLoad:true,clean:false});
+    // createMovies(movies,genericSection,{lazyLoad:true,clean:false});
 
-    const btnLoadMore=document.createElement('button');
-    btnLoadMore.addEventListener('click',getMoreTrendingMovies);
-    btnLoadMore.textContent='Cargar mas';
-    genericSection.appendChild(btnLoadMore);
+    // const btnLoadMore=document.createElement('button');
+    // btnLoadMore.addEventListener('click',getMoreTrendingMovies);
+    // btnLoadMore.textContent='Cargar mas';
+    // genericSection.appendChild(btnLoadMore);
 
 }
 

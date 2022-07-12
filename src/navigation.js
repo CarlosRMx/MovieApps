@@ -1,3 +1,6 @@
+let page=1;
+let infiniteScroll;
+
 searchFormBtn.addEventListener('click',()=>{
     const input=searchFormInput.value;
     location.hash='#search='+ input;
@@ -21,8 +24,16 @@ window.addEventListener('DOMContentLoaded',navigator,false);
 window.addEventListener('hashchange',navigator,false);
 
 
+window.addEventListener('scroll',infiniteScroll,false);
+
+
 function navigator(){
     console.log({location});
+
+    if(infiniteScroll){
+        window.removeEventListener('scroll',infiniteScroll,{passive:false});
+        infiniteScroll=undefined;
+    }
 
     if(location.hash.startsWith('#trends')){
         trendsPage();
@@ -42,13 +53,15 @@ function navigator(){
     
     document.body.scrollTop=0;
     document.documentElement.scrollTop=0;
+
+    if(infiniteScroll){
+        window.addEventListener('scroll',infiniteScroll,{passive:false});
+    }
 }
 
 function trendsPage(){
 
     console.log('Trends');
-
-    
 
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
@@ -65,6 +78,8 @@ function trendsPage(){
 
     headerCategoryTitle.innerHTML = 'Tendencias';
     getTrendingMovies();
+
+    infiniteScroll=getMoreTrendingMovies;
 }
 function searchPage(){
     console.log('Serch');
@@ -158,3 +173,9 @@ function homePage(){
     getTrendingMoviesPreview();
     getCategoriesPreview();
 }
+
+/*Referencias para infine scrolling 
+document.documentElement.clientHeight indica el alto de la venta 
+document.documentElement.clientHeight indica la cantida de scroll que se ha hecho
+document.documentElement.scrollHeight indica la cantidad de scroll que se puede hacer
+*/
