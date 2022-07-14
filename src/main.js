@@ -230,18 +230,26 @@ function createMovies(
                 'src',
                 'https://static.platzi.com/static/images/error/img404.png'
             )
-        })
+        });
+
+        const movieBtn = document.createElement('button');
+        movieBtn.classList.add('movie-btn');
+        movieBtn.addEventListener('click', () => {
+          movieBtn.classList.toggle('movie-btn--liked');
+          // DEBERIAMOS AGREGAR LA PELICULA A LS
+        });
         
         if(lazyLoad){
             lazyLoader.observe(imgMovieContainer);
         }
         
 
-        movieContainer.addEventListener('click',()=>{
+        imgMovieContainer.addEventListener('click',()=>{
             location.hash = '#movie=' + id;
         })
 
         movieContainer.appendChild(imgMovieContainer);
+        movieContainer.appendChild(movieBtn);
         container.appendChild(movieContainer);
     });
 

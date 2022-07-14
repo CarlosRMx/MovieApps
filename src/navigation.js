@@ -98,6 +98,8 @@ function searchPage(){
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
 
+    likedSection.classList.add('inactive');
+
     const [_,query]=location.hash.split('=');
     getMoviesBySearch(query);
 
@@ -120,6 +122,8 @@ function movieDetailPage(){
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.add('inactive');
     movieDetailSection.classList.remove('inactive');
+
+    likedSection.classList.add('inactive');
 
     //obteniendo el id de la pelicula a la que se le da click
     //['movie','7845222'];
@@ -145,6 +149,8 @@ function categoriesPage(){
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
 
+    likedSection.classList.add('inactive');
+
    // ['#category', 'id-name']
     const [_, categoryData] = location.hash.split('=');
     const [categoryId, categoryName] = categoryData.split('-');
@@ -169,6 +175,8 @@ function homePage(){
     categoriesPreviewSection.classList.remove('inactive');
     genericSection.classList.add('inactive');
     movieDetailSection.classList.add('inactive');
+
+    likedSection.classList.remove('inactive');
 
     getTrendingMoviesPreview();
     getCategoriesPreview();
