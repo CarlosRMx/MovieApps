@@ -218,10 +218,19 @@ function getLikedMovies(){
 
     //convertir un objeto a un array
     const likedMoviesArray= Object.values(likedMovies);
+    const totalLikedMovies=likedMoviesArray.length
+    if(totalLikedMovies > 0){
+        createMovies(likedMoviesArray,likedMovieListArticle,true);
+        
+    }else{
+        const msgNoMovies=document.createElement('p');
+        msgNoMovies.textContent='Aun no has agregado peliculas a esta seccion';
+
+        likedMovieListArticle.appendChild(msgNoMovies);
+    }
+    
     console.log(likedMoviesArray);
-
-
-    createMovies(likedMoviesArray,likedMovieListArticle,true);
+    console.log(totalLikedMovies);
 }
 
 //helpers 
