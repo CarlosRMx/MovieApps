@@ -10,6 +10,34 @@ const api = axios.create({
 
 });
 
+function likedMovieList(){
+    const item = JSON.parse(localStorage.getItem('liked_movies'));
+    let movies;
+
+    if(item){
+        movies=item;
+    }else{
+        movies={};
+    }
+
+    return movies;
+}
+function likeMovie(movie){
+
+    //movie.id
+    const likedMovies=likedMovieList();
+
+    if(likedMovies[movie.id]){
+        likedMovies[movie.id]=undefined;
+    }else{
+        likedMovies[movie.id]=movie;
+    }
+
+    return localStorage.setItem('liked_movies',JSON.stringify(likedMovies));
+
+    
+}
+
 
 
 async function getTrendingMoviesPreview(){
@@ -182,6 +210,19 @@ async function getSimilarMovies(id){
     createMovies(movies,relatedMoviesContainer);
 }
 
+function getLikedMovies(){
+
+    limpiarLikedMovieSection();
+    const likedMovies=likedMovieList();
+    console.log(likedMovies);
+
+    //convertir un objeto a un array
+    const likedMoviesArray= Object.values(likedMovies);
+    console.log(likedMoviesArray);
+
+
+    createMovies(likedMoviesArray,likedMovieListArticle,true);
+}
 
 //helpers 
 
@@ -193,6 +234,7 @@ const lazyLoader = new IntersectionObserver((entries) => {
       }
     });
 });
+
 
 function createMovies(
     movies,
@@ -234,9 +276,12 @@ function createMovies(
 
         const movieBtn = document.createElement('button');
         movieBtn.classList.add('movie-btn');
+        //cuando la pelicula ya esta en favoritos
+        likedMovieList()[movie.id] && movieBtn.classList.add('movie-btn--liked');
         movieBtn.addEventListener('click', () => {
           movieBtn.classList.toggle('movie-btn--liked');
-          // DEBERIAMOS AGREGAR LA PELICULA A LS
+          //agregar la pelicula a favoritos
+          likeMovie(movie);
         });
         
         if(lazyLoad){
@@ -308,5 +353,11 @@ function limpiarCategoriesMovieDetail(){
 function limipiarSimilarMoviesList(){
     while(relatedMoviesContainer.firstChild){
         relatedMoviesContainer.removeChild(relatedMoviesContainer.firstChild);
+    }
+}
+
+function limpiarLikedMovieSection(){
+    while(likedMovieListArticle.firstChild){
+        likedMovieListArticle.removeChild(likedMovieListArticle.firstChild);
     }
 }

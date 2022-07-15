@@ -108,8 +108,6 @@ function searchPage(){
 function movieDetailPage(){
     console.log('Movie');
 
-  
-    
     headerSection.classList.add('header-container--long');
     // headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -180,6 +178,7 @@ function homePage(){
 
     getTrendingMoviesPreview();
     getCategoriesPreview();
+    getLikedMovies();
 }
 
 /*Referencias para infine scrolling 
